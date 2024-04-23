@@ -9,7 +9,8 @@ Router.route("/movies-by-genre/:genre").get(movieControllers.getMovieByGenre);
 
 Router.get("/", authControllers.protect, movieControllers.GetAllMovies);
 
-Router.post("/", movieControllers.AddMovie);
+Router.get("/create", movieControllers.showform);
+Router.post("/create", movieControllers.AddMovie);
 
 Router.get("/:id", authControllers.protect, movieControllers.GetMovie);
 

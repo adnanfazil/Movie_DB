@@ -4,6 +4,7 @@ const { json } = require("express");
 const ApiFeatures = require("./../utils/ApiFeatures");
 const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 const CustomError = require("./../utils/CustomerError");
+const jwt = require('jsonwebtoken');
 
 exports.GetAllMovies = asyncErrorHandler(async (req, res) => {
   const features = new ApiFeatures(Movie.find(), req.query)
@@ -40,8 +41,25 @@ exports.GetMovie = asyncErrorHandler(async (req, res) => {
 });
 
 exports.AddMovie = asyncErrorHandler(async (req, res, next) => {
-  const movie = await Movie.create(req.body);
+  const{name,ratings,releaseDate,releaseYear,genres,description,duration,createdBy}=req.body;
+  const token=req.cookies?.token;
 
+  console.log(req.cookies.token)
+  console.log(token)
+  const decode =jwt.decode(token,process.env.SECRET_STR);
+  req.loggeduser={email:decode.email};
+  const movie = await Movie.create({
+    userId:req.loggeduser.email,
+    name,
+    ratings,
+    description,
+    duration,
+    releaseYear,
+    releaseDate,
+    genres,
+    createdBy
+
+  })
   res.status(201).json({
     status: "success",
     data: {
@@ -140,3 +158,6 @@ exports.getMovieByGenre = asyncErrorHandler(async (req, res) => {
     },
   });
 });
+exports.showform=async(req,res)=>{
+  res.render('movie')
+};

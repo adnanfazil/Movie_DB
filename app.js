@@ -10,6 +10,8 @@ const path = require("path");
 let app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
 app.use(cookieparser());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

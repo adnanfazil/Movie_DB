@@ -11,9 +11,7 @@ dotenv.config({ path: "./config.env" });
 const app = require("./app");
 
 mongoose
-  .connect(process.env.CONN_STR, {
-    useNewUrlParser: true,
-  })
+  .connect('mongodb://127.0.0.1:27017/movies')
   .then((conn) => {
     //console.log(conn);
     console.log("DB connection successful");

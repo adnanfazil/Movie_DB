@@ -1,3 +1,4 @@
+const { rmSync } = require("fs");
 const CustomError = require("../utils/CustomerError");
 const User = require("./../Models/userModel");
 const asyncErrorHandler = require("./../utils/asyncErrorHandler");
@@ -14,14 +15,16 @@ const setTokenCookie = (res, token) => {
 };
 
 exports.signUp = asyncErrorHandler(async (req, res, next) => {
+  console.log(req.body)
   const newUser = await User.create(req.body);
+  console.log(newUser) 
 
-  const token = jwt.sign({ id: newUser._id }, process.env.SECRET_STR, {
+  const token = jwt.sign({email:req.body.email }, process.env.SECRET_STR, {
     expiresIn: process.env.LOGIN_EXPIRES,
   });
 
   // Set JWT token as a cookie
-  setTokenCookie(res, token);
+ 
 
   res.status(200).json({
     status: "success",
@@ -55,12 +58,12 @@ exports.login = asyncErrorHandler(async (req, res, next) => {
     return next(error);
   }
 
-  const token = jwt.sign({ id: User._id }, process.env.SECRET_STR, {
+  const token = jwt.sign({ email:req.body.email }, process.env.SECRET_STR, {
     expiresIn: process.env.LOGIN_EXPIRES,
   });
 
   // Set JWT token as a cookie
-  setTokenCookie(res, token);
+  res.cookie('token',token)
 
   res.status(200).json({
     status: "message",
@@ -136,3 +139,9 @@ exports.forgotPassword = asyncErrorHandler(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 });
+exports.showform= async(req,res)=>{
+  res.render('signup')
+}
+exports.showloginform= async(req,res)=>{
+  res.render('userlogin')
+}

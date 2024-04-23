@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Movie</title>
+    <!-- Add any CSS styling here if needed -->
+</head>
+<body>
+    <h2>Create a New Movie</h2>
+    <form method="POST" action="/movies/create">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br>
+
+        <label for="duration">Duration (in minutes):</label>
+        <input type="number" id="duration" name="duration" required><br>
+
+        <label for="ratings">Ratings (1-10):</label>
+        <input type="number" id="ratings" name="ratings" min="1" max="10" required><br>
+
+        <label for="releaseYear">Release Year:</label>
+        <input type="number" id="releaseYear" name="releaseYear" required><br>
+
+        <label for="releaseDate">Release Date:</label>
+        <input type="date" id="releaseDate" name="releaseDate" required><br>
+        <label for="Created by">Created by:</label>
+        <input type="text" id="createdBy" name="createdBy" required><br>
+
+        <label for="genres">Genres:</label>
+        <select id="genres" name="genres">
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Comedy">Comedy</option>
+        </select><br>
+
+        <input type="submit" value="Create Movie">
+    </form>
+</body>
+</html>

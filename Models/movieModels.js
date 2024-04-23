@@ -4,6 +4,9 @@ const validator = require("validator");
 
 const movieSchema = new mongoose.Schema(
   {
+    userId:{
+      type:String
+    },
     name: {
       type: String,
       required: [true, "name is required field!"],
@@ -18,7 +21,6 @@ const movieSchema = new mongoose.Schema(
     },
     ratings: {
       type: Number,
-      required: [true, "ratings is required field!"],
       min: [1, "ratings must be 1 or higher"],
       max: [10, "ratings cannot be greater than 10"],
     },
